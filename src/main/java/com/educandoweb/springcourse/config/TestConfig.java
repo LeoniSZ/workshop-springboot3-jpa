@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.educandoweb.springcourse.entities.Category;
 import com.educandoweb.springcourse.entities.Order;
 import com.educandoweb.springcourse.entities.OrderItem;
+import com.educandoweb.springcourse.entities.Payment;
 import com.educandoweb.springcourse.entities.Product;
 import com.educandoweb.springcourse.entities.User;
 import com.educandoweb.springcourse.entities.enums.OrderStatus;
@@ -51,13 +52,9 @@ public class TestConfig implements CommandLineRunner {
 		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
 		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
-
-		
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
-		
-		
 
 		p1.getCategories().add(cat2);
 		p2.getCategories().add(cat1);
@@ -85,5 +82,11 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment payment	= new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(payment);
+		
+		orderRepository.save(o1);
+		
 	}
 }
